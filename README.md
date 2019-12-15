@@ -1,4 +1,4 @@
-# react-hook-mouse :mouse:
+# react-typescript-hook-mouse :mouse:
 
 A React hook to access data from mouse events.
 
@@ -7,20 +7,20 @@ A React hook to access data from mouse events.
 Using `npm`:
 
 ```sh
-npm install --save react-hook-mouse
+npm install --save react-typescript-hook-mouse
 ```
 
 Using `yarn`:
 
 ```sh
-yarn add react-hook-mouse
+yarn add react-typescript-hook-mouse
 ```
 
 ## Usage
 
 ```jsx
 import React from 'react'
-import useMouse from 'react-hook-mouse'
+import useMouse from 'react-typescript-hook-mouse'
 
 const displayCoordinates = ({x, y}) => `${x} : ${y}`
 
