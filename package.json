@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-hook-mouse",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "React hook for mouse position, movement and buttion states, now with Typescript support",
   "keywords": [
     "react",
@@ -10,7 +10,7 @@
   ],
   "repository": "git@github.com:Tootoot222/react-typescript-hook-mouse.git",
   "license": "LGPL-3.0",
-  "author": "Bence A. Toth <tothab@gmail.com>, Tyler Brown <tybrownf@gmail.com>",
+  "author": "Bence A. Toth <tothab@gmail.com>; Tyler Brown <tybrownf@gmail.com>",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

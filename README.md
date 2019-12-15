@@ -1,6 +1,6 @@
 # react-typescript-hook-mouse :mouse:
 
-A React hook to access data from mouse events.
+A React hook to access data from mouse events. Now with typescript types!
 
 ## Installation
 
@@ -19,15 +19,15 @@ yarn add react-typescript-hook-mouse
 ## Usage
 
 ```jsx
-import React from 'react'
-import useMouse from 'react-typescript-hook-mouse'
+import React from 'react';
+import useMouse from 'react-typescript-hook-mouse';
 
-const displayCoordinates = ({x, y}) => `${x} : ${y}`
+const displayCoordinates = ({x, y}) => `${x} : ${y}`;
 
-const displayFlag = flag => flag ? 'Yes' : 'No'
+const displayFlag = (flag) => flag ? 'Yes' : 'No';
 
 const ComponentWithMouse = () => {
-  const mouse = useMouse()
+  const mouse = useMouse();
 
   return (
     <ul>
@@ -76,8 +76,8 @@ const ComponentWithMouse = () => {
         {displayFlag(mouse.keyboard.shift)}
       </li>
     </ul>
-  )
-}
+  );
+};
 ```
 
 ## Caveats
