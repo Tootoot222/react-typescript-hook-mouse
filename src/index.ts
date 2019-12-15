@@ -31,8 +31,8 @@ export interface MouseState {
   keyboard: MouseModifierKeys,
 }
 
-export default () => {
-  const [mouse, setMouse] = useState({});
+export default (): MouseState | null => {
+  const [mouse, setMouse] = useState<MouseState | null>(null);
 
   useEffect(() => {
     const handleMouseEvent = (event: MouseEvent) => {
