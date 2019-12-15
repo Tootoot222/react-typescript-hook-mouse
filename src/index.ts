@@ -1,7 +1,39 @@
 import { useEffect, useState } from 'react';
 
+export interface MouseCoordinate2D {
+  x: number,
+  y: number,
+}
+
+export interface MousePosition {
+  client: MouseCoordinate2D,
+  page: MouseCoordinate2D,
+  screen: MouseCoordinate2D,
+}
+
+export interface MouseButtons {
+  left: boolean,
+  right: boolean,
+  middle: boolean,
+}
+
+export interface MouseModifierKeys {
+  alt: boolean,
+  ctrl: boolean,
+  meta: boolean,
+  shift: boolean,
+}
+
+export interface MouseState {
+  position: MousePosition,
+  movement: MouseCoordinate2D,
+  buttons: MouseButtons,
+  keyboard: MouseModifierKeys,
+}
+
 export default () => {
   const [mouse, setMouse] = useState({});
+
   useEffect(() => {
     const handleMouseEvent = (event: MouseEvent) => {
       const {
@@ -19,25 +51,26 @@ export default () => {
         shiftKey,
         buttons,
       } = event;
+
       setMouse({
         position: {
-          client: { x: clientX, y: clientY },
-          page: { x: pageX, y: pageY },
-          screen: { x: screenX, y: screenY },
+          client: { x: clientX, y: clientY } as MouseCoordinate2D,
+          page: { x: pageX, y: pageY } as MouseCoordinate2D,
+          screen: { x: screenX, y: screenY } as MouseCoordinate2D,
         },
-        movement: { x: movementX, y: movementY },
+        movement: { x: movementX, y: movementY } as MouseCoordinate2D,
         buttons: {
           left: [1, 3, 5, 7].includes(buttons),
           right: [2, 3, 6, 7].includes(buttons),
           middle: [4, 5, 6, 7].includes(buttons),
-        },
+        } as MouseButtons,
         keyboard: {
           alt: altKey,
           ctrl: ctrlKey,
           meta: metaKey,
           shift: shiftKey,
-        },
-      });
+        } as MouseModifierKeys,
+      } as MouseState);
     };
     document.addEventListener('mousedown', handleMouseEvent);
     document.addEventListener('mousemove', handleMouseEvent);
@@ -49,5 +82,6 @@ export default () => {
       document.removeEventListener('mouseup', handleMouseEvent);
     };
   }, []);
+
   return mouse;
 };
