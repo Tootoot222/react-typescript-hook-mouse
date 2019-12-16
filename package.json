@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-hook-mouse",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "module",
   "description": "React hook for mouse position, movement and buttion states, now with Typescript support",
   "keywords": [
@@ -21,6 +21,9 @@
     "build": "rm -rf dist && tsc && eslint --ext .js,.ts src && babel src --extensions .ts,.js --out-dir dist",
     "build:watch": "babel src --out-dir dist --watch"
   },
+  "dependencies": {
+    "react": "^16.12.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
@@ -39,7 +42,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "react": "^16.12.0",
     "typescript": "^3.7.3"
   },
   "peerDependencies": {
