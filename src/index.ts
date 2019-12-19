@@ -31,57 +31,79 @@ export interface MouseState {
   keyboard: MouseModifierKeys,
 }
 
-export default (): MouseState | null => {
+export interface MouseEvents {
+  mousedown: boolean,
+  mouseup: boolean,
+  mousemove: boolean,
+}
+
+const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event: MouseEvent) => {
+  setMouse({
+    position: {
+      client: { x: event.clientX, y: event.clientY },
+      page: { x: event.pageX, y: event.pageY },
+      screen: { x: event.screenX, y: event.screenY },
+    },
+    movement: { x: event.movementX, y: event.movementY },
+    buttons: {
+      left: [1, 3, 5, 7].includes(event.buttons),
+      right: [2, 3, 6, 7].includes(event.buttons),
+      middle: [4, 5, 6, 7].includes(event.buttons),
+    },
+    keyboard: {
+      alt: event.altKey,
+      ctrl: event.ctrlKey,
+      meta: event.metaKey,
+      shift: event.shiftKey,
+    },
+  });
+});
+
+type EventListenerMouseEvent = 'mousedown' | 'mouseup' | 'mousemove';
+
+type MouseEventHandler = (event: MouseEvent) => void;
+
+const registerMouseEventListener = (
+  eventListeners: MouseEvents,
+  event: EventListenerMouseEvent,
+  handler: MouseEventHandler,
+) => {
+  if (!eventListeners[event]) {
+    return;
+  }
+  document.addEventListener(event, handler);
+};
+
+const unregisterMouseEventListener = (
+  eventListeners: MouseEvents,
+  event: EventListenerMouseEvent,
+  handler: MouseEventHandler,
+) => {
+  if (!eventListeners[event]) {
+    return;
+  }
+  document.removeEventListener(event, handler);
+};
+
+const mouseEvents: EventListenerMouseEvent[] = ['mousedown', 'mouseup', 'mousemove'];
+
+export default (eventListeners: MouseEvents = {
+  mousedown: true,
+  mouseup: true,
+  mousemove: true,
+}): MouseState | null => {
   const [mouse, setMouse] = useState<MouseState | null>(null);
 
   useEffect(() => {
-    const handleMouseEvent = (event: MouseEvent) => {
-      const {
-        altKey,
-        clientX,
-        clientY,
-        ctrlKey,
-        metaKey,
-        movementX,
-        movementY,
-        screenX,
-        screenY,
-        pageX,
-        pageY,
-        shiftKey,
-        buttons,
-      } = event;
-
-      setMouse({
-        position: {
-          client: { x: clientX, y: clientY } as MouseCoordinate2D,
-          page: { x: pageX, y: pageY } as MouseCoordinate2D,
-          screen: { x: screenX, y: screenY } as MouseCoordinate2D,
-        },
-        movement: { x: movementX, y: movementY } as MouseCoordinate2D,
-        buttons: {
-          left: [1, 3, 5, 7].includes(buttons),
-          right: [2, 3, 6, 7].includes(buttons),
-          middle: [4, 5, 6, 7].includes(buttons),
-        } as MouseButtons,
-        keyboard: {
-          alt: altKey,
-          ctrl: ctrlKey,
-          meta: metaKey,
-          shift: shiftKey,
-        } as MouseModifierKeys,
-      } as MouseState);
-    };
-    document.addEventListener('mousedown', handleMouseEvent);
-    document.addEventListener('mousemove', handleMouseEvent);
-    document.addEventListener('mouseup', handleMouseEvent);
+    const handleMouseEvent = mouseEventHandlerFactory(setMouse);
+    mouseEvents.forEach((mouseEvent) => (
+      registerMouseEventListener(eventListeners, mouseEvent, handleMouseEvent)));
 
     return () => {
-      document.removeEventListener('mousedown', handleMouseEvent);
-      document.removeEventListener('mousemove', handleMouseEvent);
-      document.removeEventListener('mouseup', handleMouseEvent);
+      mouseEvents.forEach((mouseEvent) => (
+        unregisterMouseEventListener(eventListeners, mouseEvent, handleMouseEvent)));
     };
-  }, []);
+  }, [...mouseEvents.map((mouseEvent) => eventListeners[mouseEvent])]);
 
   return mouse;
 };
