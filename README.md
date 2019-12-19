@@ -80,6 +80,37 @@ const ComponentWithMouse = () => {
 };
 ```
 
+### Configuration of watched events
+
+You can specify which events you want to watch. By default, the hook watches mousedown, mouseup, and mousemove, but this behavior can be changed by passing a configuration object:
+```jsx
+  // Use defaults
+  const mouseAllEvents = useMouse();
+  
+  // Exactly the same as above
+  const mouseAllEventsExplicit = useMouse({
+    mousedown: true,
+    mouseup: true,
+    mousemove: true,
+  });
+
+  // Only watch for click events, don't watch movements
+  const mouseButtonEvents = useMouse({
+    mousedown: true,
+    mouseup: true,
+    mousemove: false,
+  });
+
+  // Dynamically register the movement listener based on the input boolean value
+  const mouseEventsDynamic = useMouse({
+    mousedown: true,
+    mouseup: true,
+    mousemove: someVariableMaybeFromAnotherHook,
+  });
+```
+
+The hook is smart enough to dynamically change the registrations to only watch for the events you want, so you can update the values in the configuration object at runtime and it will react to alter the event listeners.
+
 ## Caveats
 
 Data in `mouse.keyboard` is always read from a `MouseEvent` and therefore it will only get updated on mouse events, not when the keys are actually pressed on the keyboard.
