@@ -43,6 +43,7 @@
       {
         "devDependencies": [
           "src/setupTests.js",
+          "rollup.config.js",
           "**/*.test.ts",
           "**/*.test.tsx"
         ]

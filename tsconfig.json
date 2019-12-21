@@ -8,6 +8,7 @@
       "esnext"
     ],
     "outDir": "./dist",
+    "declarationDir": "./dist",
     "declaration": true,
     "allowJs": false,
     "skipLibCheck": true,
@@ -15,13 +16,16 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "module": "es6",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "resolveJsonModule": true
   },
+  "exclude": [
+    "node_modules",
+    "rollup.config.js"
+  ],
   "include": [
-    "src"
+    "src/**/*"
   ]
 }
 

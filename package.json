@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-hook-mouse",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "type": "module",
   "description": "React hook for mouse position, movement and buttion states, now with Typescript support",
   "keywords": [
@@ -12,8 +12,12 @@
   "repository": "git@github.com:Tootoot222/react-typescript-hook-mouse.git",
   "license": "LGPL-3.0",
   "author": "Bence A. Toth <tothab@gmail.com>; Tyler Brown <tybrownf@gmail.com>",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
   "scripts": {
     "eslint::check": "eslint --ext .js,.ts src",
     "eslint::fix": "eslint --fix --ext .js,.ts src",
@@ -42,6 +46,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "rollup": "^1.27.13",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^3.7.3"
   },
   "peerDependencies": {
