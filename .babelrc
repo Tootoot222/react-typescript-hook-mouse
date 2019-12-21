@@ -1,8 +1,17 @@
 {
   "presets": [
-    "@babel/typescript"
+    "@babel/typescript",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
   ],
   "plugins": [
+    "transform-default-import",
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread"
   ]

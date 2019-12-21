@@ -5,7 +5,7 @@ import rollupTypescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
 export default {
-  input: 'src/index.ts',
+  input: 'src/useMouse.ts',
   output: [
     {
       file: pkg.main,
