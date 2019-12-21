@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel';
+import { eslint } from 'rollup-plugin-eslint';
 import typescript from 'typescript';
 import rollupTypescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
@@ -20,6 +21,10 @@ export default {
     ...Object.keys(pkg.peerDependencies || {}),
   ],
   plugins: [
+    eslint({
+      throwOnError: true,
+      throwOnWarning: true,
+    }),
     babel(),
     rollupTypescript({
       typescript,

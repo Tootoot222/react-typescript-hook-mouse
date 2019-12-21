@@ -22,8 +22,8 @@
     "eslint::check": "eslint --ext .js,.ts src",
     "eslint::fix": "eslint --fix --ext .js,.ts src",
     "typescript::check": "tsc",
-    "build": "rm -rf dist && tsc && eslint --ext .js,.ts src && babel src --extensions .ts,.js --out-dir dist",
-    "build:watch": "babel src --out-dir dist --watch"
+    "build": "rm -rf dist && rollup -c",
+    "build::watch": "rollup -c -w"
   },
   "dependencies": {
     "react": "^16.12.0"
@@ -48,6 +48,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "rollup": "^1.27.13",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^3.7.3"
   },
