@@ -59,9 +59,19 @@ const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event:
   });
 });
 
-type EventListenerMouseEvent = 'mousedown' | 'mouseup' | 'mousemove';
+export const eventListenerMouseEvent: MouseEvents = Object.freeze({
+  mousedown: true,
+  mouseup: true,
+  mousemove: true,
+});
 
-type MouseEventHandler = (event: MouseEvent) => void;
+export type EventListenerMouseEvent = keyof typeof eventListenerMouseEvent;
+
+export type MouseEventHandler = (event: MouseEvent) => void;
+
+export function isMouseEvent(event: string): event is EventListenerMouseEvent {
+  return event in eventListenerMouseEvent;
+}
 
 const registerMouseEventListener = (
   eventListeners: MouseEvents,
@@ -85,7 +95,8 @@ const unregisterMouseEventListener = (
   document.removeEventListener(event, handler);
 };
 
-const mouseEvents: EventListenerMouseEvent[] = ['mousedown', 'mouseup', 'mousemove'];
+const mouseEvents: EventListenerMouseEvent[] = Object.keys(
+  eventListenerMouseEvent) as EventListenerMouseEvent[];
 
 export default (eventListeners: MouseEvents = {
   mousedown: true,
