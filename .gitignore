@@ -1,2 +1,10 @@
 /node_modules
+/.pnp
+.pnp.js
 /dist
+coverage.data
+/coverage/
+.DS_Store
+*.swp
+*.swo
+npm-debug.log*

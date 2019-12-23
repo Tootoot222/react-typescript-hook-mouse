@@ -63,7 +63,11 @@ export const eventListenerMouseEvent: MouseEvents = Object.freeze({
   mousedown: true,
   mouseup: true,
   mousemove: true,
+} as {
+  [key in EventListenerMouseEvent]: boolean;
 });
+
+export const mouseEvents = Object.keys(eventListenerMouseEvent) as EventListenerMouseEvent[];
 
 export type EventListenerMouseEvent = keyof typeof eventListenerMouseEvent;
 
@@ -94,9 +98,6 @@ const unregisterMouseEventListener = (
   }
   document.removeEventListener(event, handler);
 };
-
-const mouseEvents: EventListenerMouseEvent[] = Object.keys(
-  eventListenerMouseEvent) as EventListenerMouseEvent[];
 
 export default (eventListeners: MouseEvents = {
   mousedown: true,
