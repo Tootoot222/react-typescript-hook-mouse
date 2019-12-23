@@ -1,34 +1,23 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useMouse, {
-  isMouseEvent,
   EventListenerMouseEvent,
   MouseEventHandler,
-  mouseEvents,
+  MouseEvents,
 } from './useMouse';
 
-describe('isMouseEvent function', () => {
-  it('knows when a string is not a MouseEvent', () => {
-    expect(isMouseEvent('blah blah')).toBe(false);
-  });
-
-  it('properly decets mouse event names', () => {
-    mouseEvents.forEach((event) => {
-      expect(isMouseEvent(event)).toBe(true);
-    });
-  });
-
-  it('knows when a string is a MouseEvent', () => {
-    expect(isMouseEvent('mousedown')).toBe(true);
-  });
-
-  it('knows when a string is a mouseup MouseEvent', () => {
-    expect(isMouseEvent('mouseup')).toBe(true);
-  });
-
-  it('knows when a string is a mousemove MouseEvent', () => {
-    expect(isMouseEvent('mousemove')).toBe(true);
-  });
+const eventListenerMouseEvent: MouseEvents = Object.freeze({
+  mousedown: true,
+  mouseup: true,
+  mousemove: true,
+} as {
+  [key in EventListenerMouseEvent]: boolean;
 });
+
+const mouseEvents = Object.keys(eventListenerMouseEvent) as EventListenerMouseEvent[];
+
+function isMouseEvent(event: string): event is EventListenerMouseEvent {
+  return event in eventListenerMouseEvent;
+}
 
 describe('useMouse hook', () => {
 

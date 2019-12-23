@@ -10,10 +10,12 @@ export default {
     {
       file: pkg.main,
       format: 'cjs',
+      exports: 'default',
     },
     {
       file: pkg.module,
       format: 'esm',
+      exports: 'default',
     },
   ],
   external: [

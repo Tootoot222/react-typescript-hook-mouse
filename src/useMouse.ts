@@ -59,7 +59,7 @@ const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event:
   });
 });
 
-export const eventListenerMouseEvent: MouseEvents = Object.freeze({
+const eventListenerMouseEvent: MouseEvents = Object.freeze({
   mousedown: true,
   mouseup: true,
   mousemove: true,
@@ -67,15 +67,11 @@ export const eventListenerMouseEvent: MouseEvents = Object.freeze({
   [key in EventListenerMouseEvent]: boolean;
 });
 
-export const mouseEvents = Object.keys(eventListenerMouseEvent) as EventListenerMouseEvent[];
+const mouseEvents = Object.keys(eventListenerMouseEvent) as EventListenerMouseEvent[];
 
 export type EventListenerMouseEvent = keyof typeof eventListenerMouseEvent;
 
 export type MouseEventHandler = (event: MouseEvent) => void;
-
-export function isMouseEvent(event: string): event is EventListenerMouseEvent {
-  return event in eventListenerMouseEvent;
-}
 
 const registerMouseEventListener = (
   eventListeners: MouseEvents,
