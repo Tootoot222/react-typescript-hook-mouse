@@ -325,4 +325,595 @@ describe('useMouse hook', () => {
       expect(events.mousemove).toHaveLength(0);
     });
   });
+
+  it('returns the correct values from a mousedown MouseEvent', () => {
+    const mouseEvent = {
+      clientX: 1,
+      clientY: 2,
+      x: 1,
+      y: 2,
+      pageX: 3,
+      pageY: 4,
+      screenX: 5,
+      screenY: 6,
+      movementX: 7,
+      movementY: 8,
+      buttons: 0,
+      altKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      shiftKey: false,
+      button: 0,
+      offsetX: 0,
+      offsetY: 0,
+      relatedTarget: null,
+    };
+
+    const { result } = renderHook(() => useMouse({
+      mousedown: true,
+      mouseup: false,
+      mousemove: false,
+    }));
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current).not.toBeNull();
+    expect(result.current?.position.client.x).toBe(mouseEvent.clientX);
+    expect(result.current?.position.client.y).toBe(mouseEvent.clientY);
+    expect(result.current?.position.page.x).toBe(mouseEvent.pageX);
+    expect(result.current?.position.page.y).toBe(mouseEvent.pageY);
+    expect(result.current?.position.screen.x).toBe(mouseEvent.screenX);
+    expect(result.current?.position.screen.y).toBe(mouseEvent.screenY);
+
+    expect(result.current?.movement.x).toBe(mouseEvent.movementX);
+    expect(result.current?.movement.y).toBe(mouseEvent.movementY);
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.buttons = 1;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 2;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 3;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 4;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 5;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 6;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 7;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.altKey = true;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(true);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.altKey = false;
+    mouseEvent.ctrlKey = true;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(true);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.ctrlKey = false;
+    mouseEvent.metaKey = true;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(true);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.metaKey = false;
+    mouseEvent.shiftKey = true;
+
+    act(() => {
+      events.mousedown.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(true);
+
+    mouseEvent.shiftKey = false;
+  });
+
+  it('returns the correct values from a mouseup MouseEvent', () => {
+    const mouseEvent = {
+      clientX: 1,
+      clientY: 2,
+      x: 1,
+      y: 2,
+      pageX: 3,
+      pageY: 4,
+      screenX: 5,
+      screenY: 6,
+      movementX: 7,
+      movementY: 8,
+      buttons: 0,
+      altKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      shiftKey: false,
+      button: 0,
+      offsetX: 0,
+      offsetY: 0,
+      relatedTarget: null,
+    };
+
+    const { result } = renderHook(() => useMouse({
+      mousedown: false,
+      mouseup: true,
+      mousemove: false,
+    }));
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current).not.toBeNull();
+    expect(result.current?.position.client.x).toBe(mouseEvent.clientX);
+    expect(result.current?.position.client.y).toBe(mouseEvent.clientY);
+    expect(result.current?.position.page.x).toBe(mouseEvent.pageX);
+    expect(result.current?.position.page.y).toBe(mouseEvent.pageY);
+    expect(result.current?.position.screen.x).toBe(mouseEvent.screenX);
+    expect(result.current?.position.screen.y).toBe(mouseEvent.screenY);
+
+    expect(result.current?.movement.x).toBe(mouseEvent.movementX);
+    expect(result.current?.movement.y).toBe(mouseEvent.movementY);
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.buttons = 1;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 2;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 3;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 4;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 5;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 6;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 7;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.altKey = true;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(true);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.altKey = false;
+    mouseEvent.ctrlKey = true;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(true);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.ctrlKey = false;
+    mouseEvent.metaKey = true;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(true);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.metaKey = false;
+    mouseEvent.shiftKey = true;
+
+    act(() => {
+      events.mouseup.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(true);
+
+    mouseEvent.shiftKey = false;
+  });
+
+  it('returns the correct values from a mousemove MouseEvent', () => {
+    const mouseEvent = {
+      clientX: 1,
+      clientY: 2,
+      x: 1,
+      y: 2,
+      pageX: 3,
+      pageY: 4,
+      screenX: 5,
+      screenY: 6,
+      movementX: 7,
+      movementY: 8,
+      buttons: 0,
+      altKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      shiftKey: false,
+      button: 0,
+      offsetX: 0,
+      offsetY: 0,
+      relatedTarget: null,
+    };
+
+    const { result } = renderHook(() => useMouse({
+      mousedown: false,
+      mouseup: false,
+      mousemove: true,
+    }));
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current).not.toBeNull();
+    expect(result.current?.position.client.x).toBe(mouseEvent.clientX);
+    expect(result.current?.position.client.y).toBe(mouseEvent.clientY);
+    expect(result.current?.position.page.x).toBe(mouseEvent.pageX);
+    expect(result.current?.position.page.y).toBe(mouseEvent.pageY);
+    expect(result.current?.position.screen.x).toBe(mouseEvent.screenX);
+    expect(result.current?.position.screen.y).toBe(mouseEvent.screenY);
+
+    expect(result.current?.movement.x).toBe(mouseEvent.movementX);
+    expect(result.current?.movement.y).toBe(mouseEvent.movementY);
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.buttons = 1;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 2;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 3;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(false);
+
+    mouseEvent.buttons = 4;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 5;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(false);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 6;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(false);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.buttons = 7;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.buttons.left).toBe(true);
+    expect(result.current?.buttons.right).toBe(true);
+    expect(result.current?.buttons.middle).toBe(true);
+
+    mouseEvent.altKey = true;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(true);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.altKey = false;
+    mouseEvent.ctrlKey = true;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(true);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.ctrlKey = false;
+    mouseEvent.metaKey = true;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(true);
+    expect(result.current?.keyboard.shift).toBe(false);
+
+    mouseEvent.metaKey = false;
+    mouseEvent.shiftKey = true;
+
+    act(() => {
+      events.mousemove.forEach((callback) => {
+        callback(mouseEvent as MouseEvent);
+      });
+    });
+
+    expect(result.current?.keyboard.alt).toBe(false);
+    expect(result.current?.keyboard.ctrl).toBe(false);
+    expect(result.current?.keyboard.meta).toBe(false);
+    expect(result.current?.keyboard.shift).toBe(true);
+
+    mouseEvent.shiftKey = false;
+  });
 });
