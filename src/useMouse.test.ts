@@ -20,7 +20,6 @@ function isMouseEvent(event: string): event is EventListenerMouseEvent {
 }
 
 describe('useMouse hook', () => {
-
   let events: {
     [key in EventListenerMouseEvent]: MouseEventHandler[];
   };
