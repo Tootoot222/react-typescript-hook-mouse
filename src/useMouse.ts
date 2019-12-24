@@ -73,7 +73,10 @@ export type EventListenerMouseEvent = keyof typeof eventListenerMouseEvent;
 
 export type MouseEventHandler = (event: MouseEvent) => void;
 
-const registerMouseEventListener = (
+type MouseEventRegistractionAction = 'addEventListener' | 'removeEventListener';
+
+const doMouseEventListener = (
+  action: MouseEventRegistractionAction,
   eventListeners: MouseEvents,
   event: EventListenerMouseEvent,
   handler: MouseEventHandler,
@@ -81,19 +84,21 @@ const registerMouseEventListener = (
   if (!eventListeners[event]) {
     return;
   }
-  document.addEventListener(event, handler);
+
+  document[action](event, handler as EventListener);
 };
+
+const registerMouseEventListener = (
+  eventListeners: MouseEvents,
+  event: EventListenerMouseEvent,
+  handler: MouseEventHandler,
+) => doMouseEventListener('addEventListener', eventListeners, event, handler);
 
 const unregisterMouseEventListener = (
   eventListeners: MouseEvents,
   event: EventListenerMouseEvent,
   handler: MouseEventHandler,
-) => {
-  if (!eventListeners[event]) {
-    return;
-  }
-  document.removeEventListener(event, handler);
-};
+) => doMouseEventListener('removeEventListener', eventListeners, event, handler);
 
 export default (eventListeners: MouseEvents = {
   mousedown: true,
