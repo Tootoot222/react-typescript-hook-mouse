@@ -1,11 +1,11 @@
 # react-typescript-hook-mouse :mouse:
 
+[![https://nodei.co/npm/react-typescript-hook-mouse.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/react-typescript-hook-mouse.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/react-typescript-hook-mouse)
+
 A React hook to access data from mouse events. Now with typescript types!
 
-[![npm version](https://badge.fury.io/js/react-typescript-hook-mouse.svg)](https://badge.fury.io/js/react-typescript-hook-mouse) [![Build Status](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse.png?branch=master)](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse) [![Known Vulnerabilities](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse?targetFile=package.json) [![codecov](https://codecov.io/gh/Tootoot222/react-typescript-hook-mouse/branch/master/graph/badge.svg)](https://codecov.io/gh/Tootoot222/react-typescript-hook-mouse) [![code style](https://img.shields.io/badge/code%20style-Airbnb-brightgreen?logo=airbnb)](https://github.com/iamturns/eslint-config-airbnb-typescript)
+[![npm version](https://badge.fury.io/js/react-typescript-hook-mouse.svg)](https://badge.fury.io/js/react-typescript-hook-mouse) [![Build Status](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse.png?branch=master)](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse) [![Maintainability](https://api.codeclimate.com/v1/badges/06e8585ed51f0cf7a45d/maintainability)](https://codeclimate.com/github/Tootoot222/react-typescript-hook-mouse/maintainability) [![codecov](https://codecov.io/gh/Tootoot222/react-typescript-hook-mouse/branch/master/graph/badge.svg)](https://codecov.io/gh/Tootoot222/react-typescript-hook-mouse) [![Known Vulnerabilities](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse?targetFile=package.json) [![dependencies](https://david-dm.org/Tootoot222/react-typescript-hook-mouse.svg)](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse?targetFile=package.json) [![code style](https://img.shields.io/badge/code%20style-Airbnb-brightgreen?logo=airbnb)](https://github.com/iamturns/eslint-config-airbnb-typescript) [![HitCount](http://hits.dwyl.io/Tootoot222/react-typescript-hook-mouse.svg)](http://hits.dwyl.io/Tootoot222/react-typescript-hook-mouse)
 
-
-[![https://nodei.co/npm/react-typescript-hook-mouse.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/react-typescript-hook-mouse.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/react-typescript-hook-mouse)
 
 ## Installation
 
