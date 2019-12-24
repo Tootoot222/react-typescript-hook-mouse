@@ -21,7 +21,7 @@
   "scripts": {
     "eslint::check": "eslint --ext .js,.ts src",
     "eslint::fix": "eslint --fix --ext .js,.ts src",
-    "test": "jest",
+    "test": "jest --coverage",
     "test::watch": "jest --watch",
     "test::watchAll": "jest --watchAll",
     "test::coverage": "jest --coverage --watchAll=false",
