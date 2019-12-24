@@ -4,6 +4,8 @@ A React hook to access data from mouse events. Now with typescript types!
 
 [![npm version](https://badge.fury.io/js/react-typescript-hook-mouse.svg)](https://badge.fury.io/js/react-typescript-hook-mouse)
 
+[![https://nodei.co/npm/react-typescript-hook-mouse.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/react-typescript-hook-mouse.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/react-typescript-hook-mouse)
+
 ## Installation
 
 Using `npm`:
