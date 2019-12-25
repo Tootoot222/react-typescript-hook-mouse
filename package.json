@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-hook-mouse",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "type": "module",
   "description": "React hook for mouse position, movement and buttion states, now with Typescript support",
   "keywords": [
@@ -11,7 +11,7 @@
   ],
   "repository": "git@github.com:Tootoot222/react-typescript-hook-mouse.git",
   "license": "LGPL-3.0",
-  "author": "Bence A. Toth <tothab@gmail.com>; Tyler Brown <tybrownf@gmail.com>",
+  "author": "Tyler Brown <tybrownf@gmail.com>",
   "files": [
     "dist"
   ],
@@ -33,23 +33,23 @@
     "react": "^16.12.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
+    "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
-    "@babel/preset-typescript": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.7",
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.24",
     "@types/react-dom": "^16.9.4",
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
     "babel-core": "^7.0.0-bridge",
     "babel-jest": "^24.9.0",
     "babel-plugin-transform-default-import": "^1.0.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^6.3.1",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.19.1",
@@ -58,11 +58,11 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^24.9.0",
     "react-test-renderer": "^16.12.0",
-    "rollup": "^1.27.13",
+    "rollup": "^1.27.14",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-typescript2": "^0.25.3",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "react": "^16.8.0"

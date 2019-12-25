@@ -4,7 +4,7 @@
 
 A React hook to access data from mouse events. Now with typescript types!
 
-[![npm version](https://badge.fury.io/js/react-typescript-hook-mouse.svg)](https://badge.fury.io/js/react-typescript-hook-mouse) [![Build Status](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse.png?branch=master)](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse) [![Maintainability](https://api.codeclimate.com/v1/badges/06e8585ed51f0cf7a45d/maintainability)](https://codeclimate.com/github/Tootoot222/react-typescript-hook-mouse/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/06e8585ed51f0cf7a45d/test_coverage)](https://codeclimate.com/github/Tootoot222/react-typescript-hook-mouse/test_coverage) [![codecov](https://codecov.io/gh/Tootoot222/react-typescript-hook-mouse/branch/master/graph/badge.svg)](https://codecov.io/gh/Tootoot222/react-typescript-hook-mouse) [![Known Vulnerabilities](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse?targetFile=package.json) [![dependencies](https://david-dm.org/Tootoot222/react-typescript-hook-mouse.svg)](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse?targetFile=package.json) [![code style](https://img.shields.io/badge/code%20style-Airbnb-brightgreen?logo=airbnb)](https://github.com/iamturns/eslint-config-airbnb-typescript) [![HitCount](http://hits.dwyl.io/Tootoot222/react-typescript-hook-mouse.svg)](http://hits.dwyl.io/Tootoot222/react-typescript-hook-mouse)
+[![npm version](https://badge.fury.io/js/react-typescript-hook-mouse.svg)](https://badge.fury.io/js/react-typescript-hook-mouse) [![Build Status](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse.png?branch=master)](https://travis-ci.org/Tootoot222/react-typescript-hook-mouse) [![Maintainability](https://api.codeclimate.com/v1/badges/06e8585ed51f0cf7a45d/maintainability)](https://codeclimate.com/github/Tootoot222/react-typescript-hook-mouse/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/06e8585ed51f0cf7a45d/test_coverage)](https://codeclimate.com/github/Tootoot222/react-typescript-hook-mouse/test_coverage) [![Known Vulnerabilities](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Tootoot222/react-typescript-hook-mouse?targetFile=package.json) [![dependencies](https://david-dm.org/Tootoot222/react-typescript-hook-mouse.svg)](https://github.com/Tootoot222/react-typescript-hook-mouse/blob/master/package.json) [![devDependencies](https://david-dm.org/Tootoot222/react-typescript-hook-mouse/dev-status.svg)](https://github.com/Tootoot222/react-typescript-hook-mouse/blob/master/package.json) [![code style](https://img.shields.io/badge/code%20style-Airbnb-brightgreen?logo=airbnb)](https://github.com/iamturns/eslint-config-airbnb-typescript) [![HitCount](http://hits.dwyl.io/Tootoot222/react-typescript-hook-mouse.svg)](http://hits.dwyl.io/Tootoot222/react-typescript-hook-mouse)
 
 
 ## Installation
@@ -122,7 +122,9 @@ Data in `mouse.keyboard` is always read from a `MouseEvent` and therefore it wil
 
 ## Contributions
 
-Contributions are welcome. File bug reports, create pull requests, feel free to reach out at tothab@gmail.com.
+Based from the react-hook-mouse package by Bence A. Toth <tothab@gmail.com>.
+
+Contributions are welcome. File bug reports, create pull requests, feel free to reach out on the project github page, or via email.
 
 ## Licence
 
