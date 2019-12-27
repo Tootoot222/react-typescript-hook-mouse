@@ -26,6 +26,7 @@
     "test::watchAll": "jest --watchAll",
     "test::coverage": "jest --coverage --watchAll=false",
     "typescript::check": "tsc",
+    "typescript::watch": "tsc --watch",
     "build": "rm -rf dist && rollup -c",
     "build::watch": "rollup -c -w"
   },
@@ -36,6 +37,7 @@
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/preset-env": "^7.7.7",

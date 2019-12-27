@@ -35,7 +35,15 @@ export interface MouseEvents {
   mousedown: boolean,
   mouseup: boolean,
   mousemove: boolean,
+  wheel: boolean,
 }
+
+const eventListenerMouseEvent: MouseEvents = Object.freeze({
+  mousedown: true,
+  mouseup: true,
+  mousemove: true,
+  wheel: true,
+});
 
 const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event: MouseEvent) => {
   setMouse({
@@ -57,14 +65,6 @@ const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event:
       shift: event.shiftKey,
     },
   });
-});
-
-const eventListenerMouseEvent: MouseEvents = Object.freeze({
-  mousedown: true,
-  mouseup: true,
-  mousemove: true,
-} as {
-  [key in EventListenerMouseEvent]: boolean;
 });
 
 const mouseEvents = Object.keys(eventListenerMouseEvent) as EventListenerMouseEvent[];
@@ -100,7 +100,7 @@ const unregisterMouseEventListener = (
   handler: MouseEventHandler,
 ) => doMouseEventListener('removeEventListener', eventListeners, event, handler);
 
-export default (eventListeners: MouseEvents = {
+export default (eventListenerOptions: Partial<MouseEvents> = {
   mousedown: true,
   mouseup: true,
   mousemove: true,
@@ -108,6 +108,12 @@ export default (eventListeners: MouseEvents = {
   const [mouse, setMouse] = useState<MouseState | null>(null);
 
   useEffect(() => {
+    const eventListeners = mouseEvents.reduce((ac, mouseEvent) => {
+      const result = ac;
+      result[mouseEvent] = eventListenerOptions[mouseEvent] ?? true;
+      return result;
+    }, {} as Partial<MouseEvents>) as MouseEvents;
+
     const handleMouseEvent = mouseEventHandlerFactory(setMouse);
     mouseEvents.forEach((mouseEvent) => (
       registerMouseEventListener(eventListeners, mouseEvent, handleMouseEvent)));
@@ -116,7 +122,7 @@ export default (eventListeners: MouseEvents = {
       mouseEvents.forEach((mouseEvent) => (
         unregisterMouseEventListener(eventListeners, mouseEvent, handleMouseEvent)));
     };
-  }, [...mouseEvents.map((mouseEvent) => eventListeners[mouseEvent])]);
+  }, [...mouseEvents.map((mouseEvent) => eventListenerOptions[mouseEvent] ?? true)]);
 
   return mouse;
 };

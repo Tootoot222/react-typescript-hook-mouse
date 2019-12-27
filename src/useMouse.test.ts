@@ -9,8 +9,7 @@ const eventListenerMouseEvent: MouseEvents = Object.freeze({
   mousedown: true,
   mouseup: true,
   mousemove: true,
-} as {
-  [key in EventListenerMouseEvent]: boolean;
+  wheel: true,
 });
 
 const mouseEvents = Object.keys(eventListenerMouseEvent) as EventListenerMouseEvent[];
@@ -32,6 +31,7 @@ describe('useMouse hook', () => {
       mousedown: [],
       mouseup: [],
       mousemove: [],
+      wheel: [],
     };
     addEventListenerOriginal = document.addEventListener;
     removeEventListenerOriginal = document.removeEventListener;
@@ -47,6 +47,10 @@ describe('useMouse hook', () => {
           events[event].splice(idx, 1);
         }
       }
+    });
+
+    mouseEvents.forEach((mouseEvent) => {
+      expect(events[mouseEvent]).toHaveLength(0);
     });
   });
 
@@ -72,6 +76,117 @@ describe('useMouse hook', () => {
     });
   });
 
+  /*
+
+  0000 = 0 -> {
+    mousedown: true,
+    mouseup: true,
+    mousemove: true,
+    wheel: true,
+  },
+  0001 = 1 -> {
+    mousedown: false,
+    mouseup: true,
+    mousemove: true,
+    wheel: true,
+  },
+  0010 = 2 -> {
+    mousedown: true,
+    mouseup: false,
+    mousemove: true,
+    wheel: true,
+  },
+  0011 = 3 -> {
+    mousedown: false,
+    mouseup: false,
+    mousemove: true,
+    wheel: true,
+  },
+  1000 = 8 -> {
+    mousedown: true,
+    mouseup: true,
+    mousemove: true,
+    wheel: false,
+  },
+  ...
+  1111 = 15 -> {
+    mousedown: false,
+    mouseup: false,
+    mousemove: false,
+    wheel: false,
+  }
+  */
+
+  Array.from(Array((2 ** mouseEvents.length) * 2).keys()).forEach((iterNum) => {
+    const requestedEvents = mouseEvents.reduce((ac, mouseEvent, idx) => {
+      const result = ac;
+      // eslint-disable-next-line no-bitwise
+      result[mouseEvent] = (iterNum & (1 << idx)) === 0;
+      return result;
+    }, {} as Partial<MouseEvents>) as MouseEvents;
+
+    const names = Object.entries(requestedEvents).map(([key, value]) => (value ? key : null))
+      .filter((name) => !!name)
+      .join(', ') || 'no';
+    it(`registers and unregisters ${names} event listeners when configured`, () => {
+      const { rerender } = renderHook((eventListeners) => useMouse(eventListeners), {
+        initialProps: requestedEvents,
+      });
+
+      act(() => {
+        Object.entries(requestedEvents).forEach(([key, value]) => {
+          expect(events[key as EventListenerMouseEvent]).toHaveLength(value ? 1 : 0);
+        });
+      });
+
+      rerender(mouseEvents.reduce((ac, mouseEvent) => {
+        const result = ac;
+        result[mouseEvent] = false;
+        return result;
+      }, {} as Partial<MouseEvents>) as MouseEvents);
+
+      act(() => {
+        mouseEvents.forEach((mouseEvent) => {
+          expect(events[mouseEvent]).toHaveLength(0);
+        });
+      });
+    });
+    /*
+    it('registers and unregisters a mousedown and mouseup and mousemove event when configured', () => {
+      const { rerender } = renderHook((eventListeners) => useMouse(eventListeners), {
+        mouseEvents.reduce((ac, mouseEvent, idx) => {
+          ac[mouseEvent] = iterNum & idx;
+          return ac;
+        }, {} as Partial<MouseEvents>) as MouseEvents;
+        initialProps: {
+          mousedown: true,
+          mouseup: true,
+          mousemove: true,
+        },
+      });
+
+      act(() => {
+        expect(events.mousedown).toHaveLength(1);
+        expect(events.mouseup).toHaveLength(1);
+        expect(events.mousemove).toHaveLength(1);
+      });
+
+      rerender({
+        mousedown: false,
+        mouseup: false,
+        mousemove: false,
+      });
+
+      act(() => {
+        mouseEvents.forEach((mouseEvent) => {
+          expect(events[mouseEvent]).toHaveLength(0);
+        });
+      });
+    });
+    */
+  });
+
+  /*
   it('registers and unregisters a mousedown and mouseup and mousemove event when configured', () => {
     expect(events.mousedown).toHaveLength(0);
     expect(events.mouseup).toHaveLength(0);
@@ -105,6 +220,38 @@ describe('useMouse hook', () => {
   });
 
   it('registers and unregisters a mousedown and mouseup event when configured', () => {
+    expect(events.mousedown).toHaveLength(0);
+    expect(events.mouseup).toHaveLength(0);
+    expect(events.mousemove).toHaveLength(0);
+
+    const { rerender } = renderHook((eventListeners) => useMouse(eventListeners), {
+      initialProps: {
+        mousedown: true,
+        mouseup: true,
+        mousemove: false,
+      },
+    });
+
+    act(() => {
+      expect(events.mousedown).toHaveLength(1);
+      expect(events.mouseup).toHaveLength(1);
+      expect(events.mousemove).toHaveLength(0);
+    });
+
+    rerender({
+      mousedown: false,
+      mouseup: false,
+      mousemove: false,
+    });
+
+    act(() => {
+      expect(events.mousedown).toHaveLength(0);
+      expect(events.mouseup).toHaveLength(0);
+      expect(events.mousemove).toHaveLength(0);
+    });
+  });
+
+  it('registers and unregisters a mousedown and mouseup event when configured implicitly', () => {
     expect(events.mousedown).toHaveLength(0);
     expect(events.mouseup).toHaveLength(0);
     expect(events.mousemove).toHaveLength(0);
@@ -904,4 +1051,5 @@ describe('useMouse hook', () => {
 
     mouseEvent.shiftKey = false;
   });
+  */
 });
