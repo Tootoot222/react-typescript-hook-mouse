@@ -104,13 +104,14 @@ export default (eventListenerOptions: Partial<MouseEvents> = {
   mousedown: true,
   mouseup: true,
   mousemove: true,
+  wheel: true,
 }): MouseState | null => {
   const [mouse, setMouse] = useState<MouseState | null>(null);
 
   useEffect(() => {
     const eventListeners = mouseEvents.reduce((ac, mouseEvent) => {
       const result = ac;
-      result[mouseEvent] = eventListenerOptions[mouseEvent] ?? true;
+      result[mouseEvent] = !!eventListenerOptions[mouseEvent];
       return result;
     }, {} as Partial<MouseEvents>) as MouseEvents;
 
@@ -122,7 +123,7 @@ export default (eventListenerOptions: Partial<MouseEvents> = {
       mouseEvents.forEach((mouseEvent) => (
         unregisterMouseEventListener(eventListeners, mouseEvent, handleMouseEvent)));
     };
-  }, [...mouseEvents.map((mouseEvent) => eventListenerOptions[mouseEvent] ?? true)]);
+  }, [...mouseEvents.map((mouseEvent) => !!eventListenerOptions[mouseEvent])]);
 
   return mouse;
 };
