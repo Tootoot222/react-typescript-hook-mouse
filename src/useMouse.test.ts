@@ -128,7 +128,7 @@ describe('useMouse hook', () => {
   ].forEach((requestedEvents) => {
     const names = Object.entries(requestedEvents)
       .filter(([, value]) => value)
-      .map(([key, value]) => (value ? key : null))
+      .map(([key]) => key)
       .join(', ') || 'no';
     it(`registers and unregisters ${names} event listeners when explicitly configured`, () => {
       const { rerender } = renderHook((eventListeners) => useMouse(eventListeners), {
@@ -207,7 +207,7 @@ describe('useMouse hook', () => {
   ].forEach((requestedEvents) => {
     const names = Object.entries(requestedEvents)
       .filter(([, value]) => value)
-      .map(([key, value]) => (value ? key : null))
+      .map(([key]) => key)
       .join(', ') || 'no';
     it(`registers and unregisters ${names} event listeners when implicitly configured`, () => {
       const { rerender } = renderHook((eventListeners) => useMouse(eventListeners), {
@@ -264,7 +264,7 @@ describe('useMouse hook', () => {
   function getNewUseMouseHookResult(
     eventHandlerList: MouseEventHandler[],
     hookSettings: Partial<MouseEvents>,
-    factoryOverrides: Partial<MouseEvent> | undefined = undefined,
+    factoryOverrides: Partial<MouseEvent> | Partial<WheelEvent> | undefined = undefined,
   ) {
     const mouseEvent = basicMouseEventObjectFactory(factoryOverrides);
 
@@ -278,39 +278,183 @@ describe('useMouse hook', () => {
 
     expect(result.current).not.toBeNull();
 
-    return { result, mouseEvent };
+    return result;
   }
+
+  it('returns the correct positive delta values from a wheel event', () => {
+    const expectedMouseEvent = {
+      deltaX: 11,
+      deltaY: 22,
+      deltaZ: 33,
+    };
+    const result = getNewUseMouseHookResult(
+      events.wheel,
+      { wheel: true },
+      expectedMouseEvent,
+    );
+
+    expect(result.current?.wheel.deltaX).toBe(expectedMouseEvent.deltaX);
+    expect(result.current?.wheel.left).toBe(false);
+    expect(result.current?.wheel.right).toBe(true);
+    expect(result.current?.wheel.deltaY).toBe(expectedMouseEvent.deltaY);
+    expect(result.current?.wheel.up).toBe(false);
+    expect(result.current?.wheel.down).toBe(true);
+    expect(result.current?.wheel.deltaZ).toBe(expectedMouseEvent.deltaZ);
+    expect(result.current?.wheel.out).toBe(false);
+    expect(result.current?.wheel.in).toBe(true);
+  });
+
+  it('returns the correct negative delta values from a wheel event', () => {
+    const expectedMouseEvent = {
+      deltaX: -11,
+      deltaY: -22,
+      deltaZ: -33,
+    };
+    const result = getNewUseMouseHookResult(
+      events.wheel,
+      { wheel: true },
+      expectedMouseEvent,
+    );
+
+    expect(result.current?.wheel.deltaX).toBe(expectedMouseEvent.deltaX);
+    expect(result.current?.wheel.left).toBe(true);
+    expect(result.current?.wheel.right).toBe(false);
+    expect(result.current?.wheel.deltaY).toBe(expectedMouseEvent.deltaY);
+    expect(result.current?.wheel.up).toBe(true);
+    expect(result.current?.wheel.down).toBe(false);
+    expect(result.current?.wheel.deltaZ).toBe(expectedMouseEvent.deltaZ);
+    expect(result.current?.wheel.out).toBe(true);
+    expect(result.current?.wheel.in).toBe(false);
+  });
+
+  it('returns the correct zero delta values from a wheel event', () => {
+    const expectedMouseEvent = {
+      deltaX: 0,
+      deltaY: 0,
+      deltaZ: 0,
+    };
+    const result = getNewUseMouseHookResult(
+      events.wheel,
+      { wheel: true },
+      expectedMouseEvent,
+    );
+
+    expect(result.current?.wheel.deltaX).toBe(expectedMouseEvent.deltaX);
+    expect(result.current?.wheel.left).toBe(false);
+    expect(result.current?.wheel.right).toBe(false);
+    expect(result.current?.wheel.deltaY).toBe(expectedMouseEvent.deltaY);
+    expect(result.current?.wheel.up).toBe(false);
+    expect(result.current?.wheel.down).toBe(false);
+    expect(result.current?.wheel.deltaZ).toBe(expectedMouseEvent.deltaZ);
+    expect(result.current?.wheel.out).toBe(false);
+    expect(result.current?.wheel.in).toBe(false);
+  });
+
+  it('returns the correct undefined delta values from a wheel event', () => {
+    const expectedMouseEvent = {
+    };
+    const result = getNewUseMouseHookResult(
+      events.wheel,
+      { wheel: true },
+      expectedMouseEvent,
+    );
+
+    expect(result.current?.wheel.deltaX).toBeUndefined();
+    expect(result.current?.wheel.left).toBeUndefined();
+    expect(result.current?.wheel.right).toBeUndefined();
+    expect(result.current?.wheel.deltaY).toBeUndefined();
+    expect(result.current?.wheel.up).toBeUndefined();
+    expect(result.current?.wheel.down).toBeUndefined();
+    expect(result.current?.wheel.deltaZ).toBeUndefined();
+    expect(result.current?.wheel.out).toBeUndefined();
+    expect(result.current?.wheel.in).toBeUndefined();
+  });
+
+  it('returns the correct defined deltaMode value from a wheel event', () => {
+    const expectedMouseEvent = {
+      deltaMode: 2,
+    };
+    const result = getNewUseMouseHookResult(
+      events.wheel,
+      { wheel: true },
+      expectedMouseEvent,
+    );
+
+    expect(result.current?.wheel.deltaMode).toBe(expectedMouseEvent.deltaMode);
+  });
+
+  it('returns the correct undefined deltaMode value from a wheel event', () => {
+    const expectedMouseEvent = {
+    };
+    const result = getNewUseMouseHookResult(
+      events.wheel,
+      { wheel: true },
+      expectedMouseEvent,
+    );
+
+    expect(result.current?.wheel.deltaMode).toBeUndefined();
+  });
 
   mouseEvents.forEach((mouseEventName) => {
     const hookSettings: Partial<MouseEvents> = {};
     hookSettings[mouseEventName] = true;
 
     it(`returns the correct positional values from a ${mouseEventName} event`, () => {
-      const { result, mouseEvent } = getNewUseMouseHookResult(events[mouseEventName], hookSettings);
+      const expectedMouseEvent = {
+        clientX: 111,
+        clientY: 222,
+        pageX: 333,
+        pageY: 444,
+        screenX: 555,
+        screenY: 666,
+        movementX: 777,
+        movementY: 888,
+      };
+      const result = getNewUseMouseHookResult(
+        events[mouseEventName],
+        hookSettings,
+        expectedMouseEvent,
+      );
 
-      expect(result.current?.position.client.x).toBe(mouseEvent.clientX);
-      expect(result.current?.position.client.y).toBe(mouseEvent.clientY);
-      expect(result.current?.position.page.x).toBe(mouseEvent.pageX);
-      expect(result.current?.position.page.y).toBe(mouseEvent.pageY);
-      expect(result.current?.position.screen.x).toBe(mouseEvent.screenX);
-      expect(result.current?.position.screen.y).toBe(mouseEvent.screenY);
+      expect(result.current?.position.client.x).toBe(expectedMouseEvent.clientX);
+      expect(result.current?.position.client.y).toBe(expectedMouseEvent.clientY);
+      expect(result.current?.position.page.x).toBe(expectedMouseEvent.pageX);
+      expect(result.current?.position.page.y).toBe(expectedMouseEvent.pageY);
+      expect(result.current?.position.screen.x).toBe(expectedMouseEvent.screenX);
+      expect(result.current?.position.screen.y).toBe(expectedMouseEvent.screenY);
 
-      expect(result.current?.movement.x).toBe(mouseEvent.movementX);
-      expect(result.current?.movement.y).toBe(mouseEvent.movementY);
+      expect(result.current?.movement.x).toBe(expectedMouseEvent.movementX);
+      expect(result.current?.movement.y).toBe(expectedMouseEvent.movementY);
     });
 
     [
-      { left: false, right: false, middle: false },
-      { left: true, right: false, middle: false },
-      { left: false, right: true, middle: false },
-      { left: true, right: true, middle: false },
-      { left: false, right: false, middle: true },
-      { left: true, right: false, middle: true },
-      { left: false, right: true, middle: true },
-      { left: true, right: true, middle: true },
+      {
+        left: false, right: false, middle: false,
+      },
+      {
+        left: true, right: false, middle: false,
+      },
+      {
+        left: false, right: true, middle: false,
+      },
+      {
+        left: true, right: true, middle: false,
+      },
+      {
+        left: false, right: false, middle: true,
+      },
+      {
+        left: true, right: false, middle: true,
+      },
+      {
+        left: false, right: true, middle: true,
+      },
+      {
+        left: true, right: true, middle: true,
+      },
     ].forEach((expectedButtons, currentButtonsValue) => {
       it(`returns the correct button values from a ${mouseEventName} event when buttons is ${currentButtonsValue}`, () => {
-        const { result } = getNewUseMouseHookResult(events[mouseEventName], hookSettings, {
+        const result = getNewUseMouseHookResult(events[mouseEventName], hookSettings, {
           buttons: currentButtonsValue,
         });
 
@@ -374,7 +518,7 @@ describe('useMouse hook', () => {
         .map(([key]) => key)
         .join(', ') || 'no keys';
       it(`returns the correct keyboard values from a ${mouseEventName} event with ${keyNames} pressed`, () => {
-        const { result } = getNewUseMouseHookResult(
+        const result = getNewUseMouseHookResult(
           events[mouseEventName],
           hookSettings,
           expectedKeys,

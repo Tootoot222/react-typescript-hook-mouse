@@ -24,10 +24,27 @@ export interface MouseModifierKeys {
   shift: boolean,
 }
 
+export interface MouseWheel {
+  deltaX: number | undefined,
+  left: boolean | undefined,
+  right: boolean | undefined,
+
+  deltaY: number | undefined,
+  up: boolean | undefined,
+  down: boolean | undefined,
+
+  deltaZ: number | undefined,
+  out: boolean | undefined,
+  in: boolean | undefined,
+
+  deltaMode: number | undefined,
+}
+
 export interface MouseState {
   position: MousePosition,
   movement: MouseCoordinate2D,
   buttons: MouseButtons,
+  wheel: MouseWheel,
   keyboard: MouseModifierKeys,
 }
 
@@ -45,7 +62,10 @@ const eventListenerMouseEvent: MouseEvents = Object.freeze({
   wheel: true,
 });
 
+const isDefined = (x: any) => typeof x !== 'undefined';
+
 const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event: MouseEvent) => {
+  const wheelEvent = (event as WheelEvent);
   setMouse({
     position: {
       client: { x: event.clientX, y: event.clientY },
@@ -57,6 +77,21 @@ const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event:
       left: [1, 3, 5, 7].includes(event.buttons),
       right: [2, 3, 6, 7].includes(event.buttons),
       middle: [4, 5, 6, 7].includes(event.buttons),
+    },
+    wheel: {
+      deltaX: wheelEvent.deltaX,
+      left: isDefined(wheelEvent.deltaX) ? wheelEvent.deltaX < 0 : undefined,
+      right: isDefined(wheelEvent.deltaX) ? wheelEvent.deltaX > 0 : undefined,
+
+      deltaY: wheelEvent.deltaY,
+      up: isDefined(wheelEvent.deltaY) ? wheelEvent.deltaY < 0 : undefined,
+      down: isDefined(wheelEvent.deltaY) ? wheelEvent.deltaY > 0 : undefined,
+
+      deltaZ: wheelEvent.deltaZ,
+      out: isDefined(wheelEvent.deltaZ) ? wheelEvent.deltaZ < 0 : undefined,
+      in: isDefined(wheelEvent.deltaZ) ? wheelEvent.deltaZ > 0 : undefined,
+
+      deltaMode: wheelEvent.deltaMode,
     },
     keyboard: {
       alt: event.altKey,
