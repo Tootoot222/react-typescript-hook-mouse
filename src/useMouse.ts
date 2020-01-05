@@ -64,41 +64,58 @@ const eventListenerMouseEvent: MouseEvents = Object.freeze({
 
 const isDefined = (x: any) => typeof x !== 'undefined';
 
+type maybeBool = boolean | undefined;
+
+const isDeltaNegative = (delta: number): maybeBool => (isDefined(delta) ? delta < 0 : undefined);
+
+const isDeltaPositive = (delta: number): maybeBool => (isDefined(delta) ? delta > 0 : undefined);
+
+const generateMouseEventPosition = (event: MouseEvent): MousePosition => ({
+  client: { x: event.clientX, y: event.clientY },
+  page: { x: event.pageX, y: event.pageY },
+  screen: { x: event.screenX, y: event.screenY },
+});
+
+const LEFT_BUTTONS = [1, 3, 5, 7];
+const RIGHT_BUTTONS = [2, 3, 6, 7];
+const MIDDLE_BUTTONS = [4, 5, 6, 7];
+
+const generateMouseEventButtons = (event: MouseEvent): MouseButtons => ({
+  left: LEFT_BUTTONS.includes(event.buttons),
+  right: RIGHT_BUTTONS.includes(event.buttons),
+  middle: MIDDLE_BUTTONS.includes(event.buttons),
+});
+
+const generateMouseEventWheel = (event: WheelEvent): MouseWheel => ({
+  deltaX: event.deltaX,
+  left: isDeltaNegative(event.deltaX),
+  right: isDeltaPositive(event.deltaX),
+
+  deltaY: event.deltaY,
+  up: isDeltaNegative(event.deltaY),
+  down: isDeltaPositive(event.deltaY),
+
+  deltaZ: event.deltaZ,
+  out: isDeltaNegative(event.deltaZ),
+  in: isDeltaPositive(event.deltaZ),
+
+  deltaMode: event.deltaMode,
+});
+
+const generateMouseEventModifierKeys = (event: MouseEvent): MouseModifierKeys => ({
+  alt: event.altKey,
+  ctrl: event.ctrlKey,
+  meta: event.metaKey,
+  shift: event.shiftKey,
+});
+
 const mouseEventHandlerFactory = (setMouse: (m: MouseState) => void) => ((event: MouseEvent) => {
-  const wheelEvent = (event as WheelEvent);
   setMouse({
-    position: {
-      client: { x: event.clientX, y: event.clientY },
-      page: { x: event.pageX, y: event.pageY },
-      screen: { x: event.screenX, y: event.screenY },
-    },
+    position: generateMouseEventPosition(event),
     movement: { x: event.movementX, y: event.movementY },
-    buttons: {
-      left: [1, 3, 5, 7].includes(event.buttons),
-      right: [2, 3, 6, 7].includes(event.buttons),
-      middle: [4, 5, 6, 7].includes(event.buttons),
-    },
-    wheel: {
-      deltaX: wheelEvent.deltaX,
-      left: isDefined(wheelEvent.deltaX) ? wheelEvent.deltaX < 0 : undefined,
-      right: isDefined(wheelEvent.deltaX) ? wheelEvent.deltaX > 0 : undefined,
-
-      deltaY: wheelEvent.deltaY,
-      up: isDefined(wheelEvent.deltaY) ? wheelEvent.deltaY < 0 : undefined,
-      down: isDefined(wheelEvent.deltaY) ? wheelEvent.deltaY > 0 : undefined,
-
-      deltaZ: wheelEvent.deltaZ,
-      out: isDefined(wheelEvent.deltaZ) ? wheelEvent.deltaZ < 0 : undefined,
-      in: isDefined(wheelEvent.deltaZ) ? wheelEvent.deltaZ > 0 : undefined,
-
-      deltaMode: wheelEvent.deltaMode,
-    },
-    keyboard: {
-      alt: event.altKey,
-      ctrl: event.ctrlKey,
-      meta: event.metaKey,
-      shift: event.shiftKey,
-    },
+    buttons: generateMouseEventButtons(event),
+    keyboard: generateMouseEventModifierKeys(event),
+    wheel: generateMouseEventWheel(event as WheelEvent),
   });
 });
 
@@ -108,10 +125,10 @@ export type EventListenerMouseEvent = keyof typeof eventListenerMouseEvent;
 
 export type MouseEventHandler = (event: MouseEvent) => void;
 
-type MouseEventRegistractionAction = 'addEventListener' | 'removeEventListener';
+type DomEventRegistrationAction = 'addEventListener' | 'removeEventListener';
 
 const doMouseEventListener = (
-  action: MouseEventRegistractionAction,
+  action: DomEventRegistrationAction,
   eventListeners: MouseEvents,
   event: EventListenerMouseEvent,
   handler: MouseEventHandler,
