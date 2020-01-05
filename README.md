@@ -149,7 +149,7 @@ You can specify which events you want to watch. By default, the hook watches all
 
   // Exactly the same as the above
   // -- event names not given are assumed to be false
-  const mouseButtonEvents = useMouse({
+  const mouseButtonEventsImplicit = useMouse({
     mousedown: true,
     mouseup: true,
   });
