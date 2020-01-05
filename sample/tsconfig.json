@@ -1,35 +1,25 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "baseUrl": ".",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "outDir": "./dist",
-    "declarationDir": "./dist",
-    "declaration": true,
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
-    "module": "es6",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react"
   },
-  "exclude": [
-    "node_modules",
-    "rollup.config.js",
-    "**/*.test.js",
-    "**/*.test.ts"
-  ],
   "include": [
-    "src/**/*"
+    "src"
   ]
 }
-

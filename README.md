@@ -27,67 +27,106 @@ yarn add react-typescript-hook-mouse
 import React from 'react';
 import useMouse from 'react-typescript-hook-mouse';
 
-const displayCoordinates = ({x, y}) => `${x} : ${y}`;
+const displayCoordinates = ({ x, y }: { x: number, y: number }) => `(${String(x)}, ${String(y)})`;
 
-const displayFlag = (flag) => flag ? 'Yes' : 'No';
-
-const ComponentWithMouse = () => {
+export default () => {
   const mouse = useMouse();
+
+  if (!mouse) {
+    return <span>Initializing...</span>;
+  }
 
   return (
     <ul>
       <li>
-        Mouse position in viewport:
-        {displayCoordinates(mouse.position.client)}
+        <span>Mouse position in viewport: </span>
+        <span>{displayCoordinates(mouse.position.client)}</span>
       </li>
       <li>
-        Mouse position on page:
-        {displayCoordinates(mouse.position.page)}
+        <span>Mouse position on page: </span>
+        <span>{displayCoordinates(mouse.position.page)}</span>
       </li>
       <li>
-        Mouse position on screen:
-        {displayCoordinates(mouse.position.screen)}
+        <span>Mouse position on screen: </span>
+        <span>{displayCoordinates(mouse.position.screen)}</span>
       </li>
       <li>
-        Mouse movement:
-        {displayCoordinates(mouse.movement)}
+        <span>Mouse movement: </span>
+        <span>{displayCoordinates(mouse.movement)}</span>
       </li>
       <li>
-        Left button was pressed:
-        {displayFlag(mouse.buttons.left)}
+        <span>Left button was pressed: </span>
+        <span>{String(mouse.buttons.left)}</span>
       </li>
       <li>
-        Right button was pressed:
-        {displayFlag(mouse.buttons.right)}
+        <span>Right button was pressed: </span>
+        <span>{String(mouse.buttons.right)}</span>
       </li>
       <li>
-        Middle button was pressed:
-        {displayFlag(mouse.buttons.middle)}
+        <span>Middle button was pressed: </span>
+        <span>{String(mouse.buttons.middle)}</span>
       </li>
       <li>
-        Alt key was pressed:
-        {displayFlag(mouse.keyboard.alt)}
+        <span>Alt key was pressed: </span>
+        <span>{String(mouse.keyboard.alt)}</span>
       </li>
       <li>
-        Ctrl key was pressed:
-        {displayFlag(mouse.keyboard.ctrl)}
+        <span>Ctrl key was pressed: </span>
+        <span>{String(mouse.keyboard.ctrl)}</span>
       </li>
       <li>
-        Meta key was pressed:
-        {displayFlag(mouse.keyboard.meta)}
+        <span>Meta key was pressed: </span>
+        <span>{String(mouse.keyboard.meta)}</span>
       </li>
       <li>
-        Shift key was pressed:
-        {displayFlag(mouse.keyboard.shift)}
+        <span>Shift key was pressed: </span>
+        <span>{String(mouse.keyboard.shift)}</span>
+      </li>
+      <li>
+        <span>Wheel delta X: </span>
+        <span>{String(mouse.wheel.deltaX)}</span>
+      </li>
+      <li>
+        <span>Wheel moved left: </span>
+        <span>{String(mouse.wheel.left)}</span>
+      </li>
+      <li>
+        <span>Wheel moved right: </span>
+        <span>{String(mouse.wheel.right)}</span>
+      </li>
+      <li>
+        <span>Wheel delta Y: </span>
+        <span>{String(mouse.wheel.deltaY)}</span>
+      </li>
+      <li>
+        <span>Wheel moved up: </span>
+        <span>{String(mouse.wheel.up)}</span>
+      </li>
+      <li>
+        <span>Wheel moved down: </span>
+        <span>{String(mouse.wheel.down)}</span>
+      </li>
+      <li>
+        <span>Wheel delta Z: </span>
+        <span>{String(mouse.wheel.deltaZ)}</span>
+      </li>
+      <li>
+        <span>Wheel moved out: </span>
+        <span>{String(mouse.wheel.out)}</span>
+      </li>
+      <li>
+        <span>Wheel moved in: </span>
+        <span>{String(mouse.wheel.in)}</span>
       </li>
     </ul>
   );
 };
+
 ```
 
 ### Configuration of watched events
 
-You can specify which events you want to watch. By default, the hook watches mousedown, mouseup, and mousemove, but this behavior can be changed by passing a configuration object:
+You can specify which events you want to watch. By default, the hook watches all the events it knows about (mousedown, mouseup, mousemove, and wheel), but this behavior can be changed by passing a configuration object:
 ```jsx
   // Use defaults
   const mouseAllEvents = useMouse();
@@ -97,16 +136,26 @@ You can specify which events you want to watch. By default, the hook watches mou
     mousedown: true,
     mouseup: true,
     mousemove: true,
+    wheel: true,
   });
 
-  // Only watch for click events, don't watch movements
+  // Only watch for click events, don't watch movements or wheel events
   const mouseButtonEvents = useMouse({
     mousedown: true,
     mouseup: true,
     mousemove: false,
+    wheel: false,
+  });
+
+  // Exactly the same as the above
+  // -- event names not given are assumed to be false
+  const mouseButtonEvents = useMouse({
+    mousedown: true,
+    mouseup: true,
   });
 
   // Dynamically register the movement listener based on the input boolean value
+  // Does not watch the wheel event
   const mouseEventsDynamic = useMouse({
     mousedown: true,
     mouseup: true,
