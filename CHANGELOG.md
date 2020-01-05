@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.18
+
+- Added support for wheel events
+
 ## 1.0.17
 
 - Added changelog
