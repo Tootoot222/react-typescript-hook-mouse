@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.18
+
+- Added support for wheel events
+- Added sample project generated with create-react-app
+
 ## 1.0.17
 
 - Added changelog
