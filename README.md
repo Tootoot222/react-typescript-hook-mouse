@@ -27,32 +27,30 @@ yarn add react-typescript-hook-mouse
 import React from 'react';
 import useMouse from 'react-typescript-hook-mouse';
 
-const displayCoordinates = ({ x, y }: { x: number, y: number }) => `(${String(x)}, ${String(y)})`;
-
 export default () => {
   const mouse = useMouse();
 
   if (!mouse) {
-    return <span>Initializing...</span>;
+    return <span>Awaiting first mouse event...</span>;
   }
 
   return (
     <ul>
       <li>
         <span>Mouse position in viewport: </span>
-        <span>{displayCoordinates(mouse.position.client)}</span>
+        <span>{`(${String(mouse.position.client.x)}, ${String(mouse.position.client.y)})`}</span>
       </li>
       <li>
         <span>Mouse position on page: </span>
-        <span>{displayCoordinates(mouse.position.page)}</span>
+        <span>{`(${String(mouse.position.page.x)}, ${String(mouse.position.page.y)})`}</span>
       </li>
       <li>
         <span>Mouse position on screen: </span>
-        <span>{displayCoordinates(mouse.position.screen)}</span>
+        <span>{`(${String(mouse.position.screen.x)}, ${String(mouse.position.screen.y)})`}</span>
       </li>
       <li>
         <span>Mouse movement: </span>
-        <span>{displayCoordinates(mouse.movement)}</span>
+        <span>{`(${String(mouse.movement.x)}, ${String(mouse.movement.y)})`}</span>
       </li>
       <li>
         <span>Left button was pressed: </span>
@@ -121,17 +119,16 @@ export default () => {
     </ul>
   );
 };
-
 ```
 
 ### Configuration of watched events
 
 You can specify which events you want to watch. By default, the hook watches all the events it knows about (mousedown, mouseup, mousemove, and wheel), but this behavior can be changed by passing a configuration object:
 ```jsx
-  // Use defaults
+  // Use defaults.
   const mouseAllEvents = useMouse();
   
-  // Exactly the same as above
+  // Exactly the same as above.
   const mouseAllEventsExplicit = useMouse({
     mousedown: true,
     mouseup: true,
@@ -139,7 +136,7 @@ You can specify which events you want to watch. By default, the hook watches all
     wheel: true,
   });
 
-  // Only watch for click events, don't watch movements or wheel events
+  // Only watch for click events, don't watch movements or wheel events.
   const mouseButtonEvents = useMouse({
     mousedown: true,
     mouseup: true,
@@ -147,15 +144,16 @@ You can specify which events you want to watch. By default, the hook watches all
     wheel: false,
   });
 
-  // Exactly the same as the above
-  // -- event names not given are assumed to be false
+  // Exactly the same as the above.
+  // Event names not given are assumed to be false.
   const mouseButtonEventsImplicit = useMouse({
     mousedown: true,
     mouseup: true,
   });
 
-  // Dynamically register the movement listener based on the input boolean value
-  // Does not watch the wheel event
+  // Dynamically register the movement listener,
+  // based on the input boolean value.
+  // Does not watch the wheel event.
   const mouseEventsDynamic = useMouse({
     mousedown: true,
     mouseup: true,

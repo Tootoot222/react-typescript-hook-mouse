@@ -1,32 +1,30 @@
 import React from 'react';
 import useMouse from 'react-typescript-hook-mouse';
 
-const displayCoordinates = ({ x, y }: { x: number, y: number }) => `(${String(x)}, ${String(y)})`;
-
 export default () => {
   const mouse = useMouse();
 
   if (!mouse) {
-    return <span>Initializing...</span>;
+    return <span>Awaiting first mouse event...</span>;
   }
 
   return (
     <ul>
       <li>
         <span>Mouse position in viewport: </span>
-        <span>{displayCoordinates(mouse.position.client)}</span>
+        <span>{`(${String(mouse.position.client.x)}, ${String(mouse.position.client.y)})`}</span>
       </li>
       <li>
         <span>Mouse position on page: </span>
-        <span>{displayCoordinates(mouse.position.page)}</span>
+        <span>{`(${String(mouse.position.page.x)}, ${String(mouse.position.page.y)})`}</span>
       </li>
       <li>
         <span>Mouse position on screen: </span>
-        <span>{displayCoordinates(mouse.position.screen)}</span>
+        <span>{`(${String(mouse.position.screen.x)}, ${String(mouse.position.screen.y)})`}</span>
       </li>
       <li>
         <span>Mouse movement: </span>
-        <span>{displayCoordinates(mouse.movement)}</span>
+        <span>{`(${String(mouse.movement.x)}, ${String(mouse.movement.y)})`}</span>
       </li>
       <li>
         <span>Left button was pressed: </span>
