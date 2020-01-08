@@ -1,7 +1,8 @@
 {
   "name": "react-typescript-hook-mouse",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "type": "module",
+  "homepage": "https://www.react-typescript-hook-mouse.ttt222.org",
   "description": "React hook for mouse position, movement and buttion states, now with Typescript support",
   "keywords": [
     "react",
