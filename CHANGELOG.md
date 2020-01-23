@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.19
+
+- Updated documentation and made sample project deployable to a server
+
 ## 1.0.18
 
 - Added support for wheel events
