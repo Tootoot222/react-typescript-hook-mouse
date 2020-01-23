@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.20
+
+- Updated dependencies to latest versions
+
 ## 1.0.19
 
 - Updated documentation and made sample project deployable to a server
