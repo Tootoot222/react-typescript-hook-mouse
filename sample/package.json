@@ -16,7 +16,7 @@
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0",
     "react-test-renderer": "^16.12.0",
-    "react-typescript-hook-mouse": "^1.0.21",
+    "react-typescript-hook-mouse": "^1.0.20",
     "typescript": "^3.7.5"
   },
   "devDependencies": {
