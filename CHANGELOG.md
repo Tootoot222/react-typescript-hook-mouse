@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.0.21
-
-- Updated dependencies to latest versions
-
 ## 1.0.20
 
 - Updated dependencies to latest versions
