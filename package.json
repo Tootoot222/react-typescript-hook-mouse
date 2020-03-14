@@ -52,7 +52,7 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-typescript2": "^0.26.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.19.2",
