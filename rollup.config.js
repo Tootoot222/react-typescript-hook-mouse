@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import { eslint } from 'rollup-plugin-eslint';
 import typescript from 'typescript';
 import rollupTypescript from 'rollup-plugin-typescript2';
@@ -27,7 +27,7 @@ export default {
       throwOnError: true,
       throwOnWarning: true,
     }),
-    babel(),
+    babel({ babelHelpers: 'bundled' }),
     rollupTypescript({
       typescript,
     }),
