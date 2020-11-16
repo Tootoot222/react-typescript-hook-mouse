@@ -64,11 +64,11 @@ const eventListenerMouseEvent: MouseEvents = Object.freeze({
 
 const isDefined = (x: any) => typeof x !== 'undefined';
 
-type maybeBool = boolean | undefined;
+type MaybeBool = boolean | undefined;
 
-const isDeltaNegative = (delta: number): maybeBool => (isDefined(delta) ? delta < 0 : undefined);
+const isDeltaNegative = (delta: number): MaybeBool => (isDefined(delta) ? delta < 0 : undefined);
 
-const isDeltaPositive = (delta: number): maybeBool => (isDefined(delta) ? delta > 0 : undefined);
+const isDeltaPositive = (delta: number): MaybeBool => (isDefined(delta) ? delta > 0 : undefined);
 
 const generateMouseEventPosition = (event: MouseEvent): MousePosition => ({
   client: { x: event.clientX, y: event.clientY },

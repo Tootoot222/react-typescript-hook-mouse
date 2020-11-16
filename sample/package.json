@@ -17,12 +17,12 @@
     "react-dom": "^16.14.0",
     "react-scripts": "^4.0.0",
     "react-test-renderer": "^16.14.0",
-    "react-typescript-hook-mouse": "^1.0.21",
+    "react-typescript-hook-mouse": "^1.0.22",
     "typescript": "^3.9.7"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "eslint": "^7.13.0",
+    "eslint": "^7.11.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-import": "^2.22.1",
