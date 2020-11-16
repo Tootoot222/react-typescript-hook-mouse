@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-hook-mouse",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "type": "module",
   "homepage": "https://www.react-typescript-hook-mouse.ttt222.org",
   "description": "React hook for mouse position, movement and buttion states, now with Typescript support",
@@ -64,7 +64,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
-    "jest": "^26.6.0",
+    "jest": "26.6.0",
     "react": "^16.14.0",
     "react-test-renderer": "^16.14.0"
   },
