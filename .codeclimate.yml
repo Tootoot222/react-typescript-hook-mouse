@@ -13,3 +13,5 @@ exclude_patterns:
   - "**/*_test.go"
   - "**/*.d.ts"
   - "sample/"
+  - "**/*.test.ts"
+  - "**/*.test.js"
